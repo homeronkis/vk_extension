@@ -11,14 +11,15 @@
   "content_scripts": [
     {
     "matches": [
-      "https://*.vk.com/*"
+      "https://*/*"
     ],
     "js": ["inject.js"]
     }
   ],
   "permissions": [
     "tabs",
-    "storage"
+    "storage",
+    "webNavigation"
   ],
   "web_accessible_resources": [
     "content.js"

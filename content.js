@@ -1,5 +1,4 @@
-function getUserData(userId) {
-  console.log(userId, 'USERID')
+function setUserData(userId) {
   var xhr = new XMLHttpRequest();
   xhr.open(
     'GET',
@@ -8,35 +7,40 @@ function getUserData(userId) {
   );
   xhr.setRequestHeader("Authorization", "Basic " + btoa("psyextention:shikari1"));
   xhr.onload = function(result) {
-    console.log(JSON.parse(xhr.response));
-      debugger;
+      var response = JSON.parse(xhr.response);
       var block =  document.getElementById('profile_short')
-      block.innerHTML = '<p>asdasdasd</p>'
+      block.innerHTML = '<p>' + response.first_name + ' ' + response.id + '</p>'
+      console.log(response)
   };
   xhr.send();
 }
 
-function get_user () {
-  if (typeof Profile !== 'undefined') {
-    getUserData(cur.oid);
-  }
+function modifyProfile() {
+  if (typeof Profile !== 'undefined' && !Profile.modified) {
+      Profile.init = (function (nativeInit) {
+        if (window.cur.oid) {
+          setUserData(window.cur.oid)
+        }
+
+        return function(e) {
+          setUserData(e.user_id)
+
+          return nativeInit(e)
+        }
+      })(Profile.init)
+      Profile.modified = true;
+    }
 }
 
+window.onpopstate = function () {
+  modifyProfile()
+}
 
-window.addEventListener('popstate', function () {
-  console.log('popState');
-  if (typeof Profile !== 'undefined') {
-    getUserData(cur.oid);
-    console.log("popState")
+window.history.pushState = (function (nativePushState) {
+  return function (a, b, c) {
+    modifyProfile()
+    nativePushState.apply(this, arguments)
   }
-});
-window.addEventListener('pushstate',function (url) {
-  history.pushState(state, title, url);
-  console.log(url)
-});
+})((window.history.pushState))
 
-
-
-window.addEventListener('hashchange', function () {
-  console.log('changed!')
-});
+modifyProfile();
