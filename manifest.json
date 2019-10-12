@@ -1,0 +1,31 @@
+{
+  "name": "Getting Started Example",
+  "version": "1.0",
+  "description": "Build an Extension!",
+  "background": {
+    "scripts": [
+      "background.js"
+    ],
+    "persistent": false
+  },
+  "content_scripts": [
+    {
+    "matches": [
+      "https://*.vk.com/*"
+    ],
+    "js": ["inject.js"]
+    }
+  ],
+  "permissions": [
+    "tabs",
+    "storage"
+  ],
+  "web_accessible_resources": [
+    "content.js"
+  ],
+  "browser_action": {
+    "default_icon": "leaf.png",
+    "default_popup": "popup.html"
+  },
+  "manifest_version": 2
+}
