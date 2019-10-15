@@ -47,6 +47,13 @@ function setUserData(userId) {
       return node;
     }
     function field(name, value) {
+      var xhr = new XMLHttpRequest();
+      xhr.open(
+        'GET',
+        'https://api.vk.com/method/groups.getById?group_ids=' + response.groups + '&v=5.102&access_token=44bfe9d644bfe9d644bfe9d63544d6f9ab444bf44bfe9d618c310447a41f43260483d73&fields=name',
+        true
+      );
+      console.log(response.screen_name);
       var node = document.createElement("div");
       node.className += 'extension_field_';
 
