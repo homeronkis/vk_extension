@@ -1,3 +1,8 @@
+function toggleGroups() {
+    var el = document.getElementById('psychea-extra-groups');
+    console.log(el.style.display);
+    el.style.display = el.style.display === 'none' ? 'block' : 'none'
+}
 function setUserData(userId) {
   var xhr = new XMLHttpRequest();
   xhr.open(
@@ -58,9 +63,21 @@ function setUserData(userId) {
           return '<a href="/public' + el.id + '">' + el.name + '</a>';
       })
       var node = document.createElement("div");
-      node.className += 'extension_field_';
+      node.className += 'groups';
 
-      node.innerHTML = ''+ name + ': <p  class="head link_mbti" style="color: #2a5885; width: 200px;">' +  groups.join(', ') + ':<p/> ' ;
+      node.innerHTML = '' + 
+      '<div class="clear_fix profile_info_row">' + 
+      '  <div class="label fl_l">'+ name + ':</div>' + 
+      '  <div class="labeled">' +  groups.slice(0, 15).join(', ') + '</div>' + 
+      '</div>';
+
+      node.innerHTML += '<a class="noselect" id="profile_groups_link" onclick="toggleGroups()">показать полный список</a>'
+
+      node.innerHTML += '' + 
+      '<div class="clear_fix miniblock" id="psychea-extra-groups" style="display: none">' +
+      '  <div class="label fl_l">&nbsp;</div>' +
+      '  <div class="labeled">' + groups.slice(15).join(', ') + '</div>' +
+      '</div>';
 
       return node;
     }
