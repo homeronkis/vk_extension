@@ -2,33 +2,84 @@ function setUserData(userId) {
   var xhr = new XMLHttpRequest();
   xhr.open(
     'GET',
-    'https://api.datafuel.ru/user/' + userId + '?fields=screen_name,MBTI,IE,SN,TF,JP',
+    'https://api.datafuel.ru/user/' + userId + '?fields=screen_name,MBTI,groups,IE,SN,TF,JP',
     true
   );
   xhr.setRequestHeader("Authorization", "Basic " + btoa("psyextention:shikari1"));
   xhr.onload = function(result) {
       var response = JSON.parse(xhr.response);
+    function field(name, value) {
+      var node = document.createElement("div");
+      node.className += 'extension_field';
+
+      node.innerHTML = '<a href="https://typeplanet.ru/type-descriptions/"  class="head" style="color: #828282;">' + name + ':<a/> ' + value;
+
+      return node;
+    }
+    function fieldLink(name, value) {
+      var node = document.createElement("a");
+      node.className += 'extension_field';
+      links = {
+        INTJ: "https://typeplanet.ru/type-descriptions/intj",
+        INFJ: "https://typeplanet.ru/type-descriptions/infj",
+        INTP: "https://typeplanet.ru/type-descriptions/intp",
+        INFP: "https://typeplanet.ru/type-descriptions/infp",
+        ISTJ: "https://typeplanet.ru/type-descriptions/istj",
+        ISFJ: "https://typeplanet.ru/type-descriptions/isfj",
+        ISTP: "https://typeplanet.ru/type-descriptions/istp",
+        ISFP: "https://typeplanet.ru/type-descriptions/isfp",
+        ENTJ: "https://typeplanet.ru/type-descriptions/entj",
+        ENFJ: "https://typeplanet.ru/type-descriptions/enfj",
+        ENTP: "https://typeplanet.ru/type-descriptions/entp",
+        ENFP: "https://typeplanet.ru/type-descriptions/enfp",
+        ESTJ: "https://typeplanet.ru/type-descriptions/estj",
+        ESFJ: "https://typeplanet.ru/type-descriptions/esfj",
+        ESTP: "https://typeplanet.ru/type-descriptions/estp",
+        ESFP: "https://typeplanet.ru/type-descriptions/esfp",
+      };
+      for (var link in links) {
+        if (response.MBTI === link) {
+          node.setAttribute("href", links.link );
+          node.innerHTML = '<span id="link_mbti" class="head" style="color: #828282;">' + name + ':<a/>' + value;
+          console.log(links.link);
+          return node;
+        }
+      }
+    }
+    fieldLink();
     function calculation(value, name, spare) {
       var node = document.createElement("div");
+      node.className += 'extension_field';
       if (value <= 50) {
         value = 100 - value;
       } else {
         name = spare;
       }
 
-      node.innerHTML = '<span class="head">' + name + ':</span> ' + Math.round(value) + '%';
+      node.innerHTML = '<span class="head" style="color: #828282;">' + name + ':</span> ' + Math.round(value) + '%';
 
       return node;
     }
-    var container = document.getElementById('profile_short')
-    console.log(response.IE);
-    console.log(response.JP, calculation(response.JP, 'irra', 'racio'));
-    console.log(response.SN);
-    console.log(response.TF);
-      container.appendChild(calculation(response.IE, 'экстраверт', 'интроверт'))
-      container.appendChild(calculation(response.JP, 'irra', 'racio'))
-      container.appendChild(calculation(response.SN, 'senso', 'intuit'))
-      container.appendChild(calculation(response.TF, 'etic', 'logic'))
+    var style = document.createElement('style');
+    style.innerHTML = `
+  .extension_field {
+  color: #2a5885;
+    width: 192px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    padding-top: 5px;
+  }
+  `;
+    document.head.appendChild(style);
+    var container = document.getElementById('profile_short');
+      container.prepend(calculation(response.IE, 'Экстраверт', 'Интроверт'));
+      container.prepend(calculation(response.JP, 'Иррационал', 'Рационал'));
+      container.prepend(calculation(response.SN, 'Интуит', 'Сенсорик'));
+      container.prepend(calculation(response.TF, 'Этик', 'Логик'));
+      container.prepend(fieldLink('Психотип по MBTI', node));
+      container.prepend(field('Общие группы', response.groups));
   };
   xhr.send();
 }

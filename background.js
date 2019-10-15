@@ -32,6 +32,7 @@ chrome.runtime.onInstalled.addListener(function () {
       this._redirect_uri = 'https://oauth.vk.com/blank.html';
       this._version = '5.102';
       this._client_id = config.vkClientId;
+      console.log(config.vkClientId);
     },
 
     begin: function () {
@@ -41,11 +42,11 @@ chrome.runtime.onInstalled.addListener(function () {
         '&v=' + this._version +
         '&response_type=token&scope=offline';
       var self = this;
-
       chrome.tabs.create({url: url, selected: true}, function (data) {
         chrome.tabs.onUpdated.addListener(function (tabId, moveInfo) {
           if (tabId === data.id && moveInfo.status === 'loading' && moveInfo.url.startsWith(self._redirect_uri)) {
             chrome.tabs.get(tabId, function (tab) {
+              alert(url);
               chrome.tabs.remove(tabId)
               console.log(tab)
             })
