@@ -68,7 +68,7 @@ function setUserData(userId) {
       node.innerHTML = '' + 
       '<div class="clear_fix profile_info_row">' + 
       '  <div class="label fl_l">'+ name + ':</div>' + 
-      '  <div class="labeled">' +  groups.slice(0, 15).join(', ') + '</div>' + 
+      '  <div class="labeled">' +  groups.slice(0, 7).join(', ') + '</div>' + 
       '</div>';
 
       node.innerHTML += '<a style="margin-bottom: 5px;" class="profile_more_info_link" onclick="toggleGroups(this)">Показать полный список</a>'
@@ -76,7 +76,7 @@ function setUserData(userId) {
       node.innerHTML += '' + 
       '<div class="clear_fix miniblock" id="psychea-extra-groups" style="display: none">' +
       '  <div class="label fl_l">&nbsp;</div>' +
-      '  <div class="labeled">' + groups.slice(15).join(', ') + '</div>' +
+      '  <div class="labeled">' + groups.slice(7).join(', ') + '</div>' +
       '</div>';
 
       return node;
