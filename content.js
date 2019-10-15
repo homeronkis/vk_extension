@@ -42,7 +42,6 @@ function setUserData(userId) {
       } else {
         name = spare;
       }
-      console.log(value)
       node.innerHTML = '<span class="head" style="color: #828282;">' + name + ':</span> ' + Math.round(value) + '%';
       return node;
     }
@@ -56,7 +55,7 @@ function setUserData(userId) {
       xhr.send()
       groups = JSON.parse(xhr.response).response;
       groups = groups.map(function(el) {
-          return '<a href="/id' + el.id + '">' + el.name + '</a>';
+          return '<a href="/public' + el.id + '">' + el.name + '</a>';
       })
       var node = document.createElement("div");
       node.className += 'extension_field_';
