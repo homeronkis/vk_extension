@@ -23,7 +23,7 @@ chrome.runtime.onInstalled.addListener(function () {
     chrome.storage.sync.set({
       [config.storageKey]: true
     })
-    chrome.browserAction.setIcon({path: config.enabledIcon});
+//    chrome.browserAction.setIcon({path: config.enabledIcon});
   };
 
   window.OAuth2 = {

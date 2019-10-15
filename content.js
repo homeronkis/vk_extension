@@ -16,7 +16,7 @@ function setUserData(userId) {
 
       return node;
     }
-    function fieldLink(name, value) {
+    function fieldLink(name) {
       var node = document.createElement("a");
       node.className += 'extension_field';
       links = {
@@ -37,16 +37,11 @@ function setUserData(userId) {
         ESTP: "https://typeplanet.ru/type-descriptions/estp",
         ESFP: "https://typeplanet.ru/type-descriptions/esfp",
       };
-      for (var link in links) {
-        if (response.MBTI === link) {
-          node.setAttribute("href", links.link );
-          node.innerHTML = '<span id="link_mbti" class="head" style="color: #828282;">' + name + ':<a/>' + value;
-          console.log(links.link);
-          return node;
-        }
-      }
+      node.setAttribute("href", links[response.MBTI]);
+      node.innerHTML = '<span id="link_mbti" class="head" style="color: #828282;">' + name + ':<span/> ' + response.MBTI;
+
+      return node;
     }
-    fieldLink();
     function calculation(value, name, spare) {
       var node = document.createElement("div");
       node.className += 'extension_field';
@@ -78,7 +73,7 @@ function setUserData(userId) {
       container.prepend(calculation(response.JP, 'Иррационал', 'Рационал'));
       container.prepend(calculation(response.SN, 'Интуит', 'Сенсорик'));
       container.prepend(calculation(response.TF, 'Этик', 'Логик'));
-      container.prepend(fieldLink('Психотип по MBTI', node));
+      container.prepend(fieldLink('Психотип по MBTI'));
       container.prepend(field('Общие группы', response.groups));
   };
   xhr.send();
