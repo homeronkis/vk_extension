@@ -8,14 +8,6 @@ function setUserData(userId) {
   xhr.setRequestHeader("Authorization", "Basic " + btoa("psyextention:shikari1"));
   xhr.onload = function(result) {
       var response = JSON.parse(xhr.response);
-    function field(name, value) {
-      var node = document.createElement("div");
-      node.className += 'extension_field';
-
-      node.innerHTML = '<a href="https://typeplanet.ru/type-descriptions/"  class="head" style="color: #828282;">' + name + ':<a/> ' + value;
-
-      return node;
-    }
     function fieldLink(name) {
       var node = document.createElement("a");
       node.className += 'extension_field';
@@ -38,7 +30,7 @@ function setUserData(userId) {
         ESFP: "https://typeplanet.ru/type-descriptions/esfp",
       };
       node.setAttribute("href", links[response.MBTI]);
-      node.innerHTML = '<span id="link_mbti" class="head" style="color: #828282;">' + name + ':<span/> ' + response.MBTI;
+      node.innerHTML = '<span id="link_mbti" class="head" style="color: #2a5885; width: 200px; display: flex; justify-content: space-between;">' + name + ':<span/> ' + response.MBTI;
 
       return node;
     }
@@ -52,6 +44,13 @@ function setUserData(userId) {
       }
 
       node.innerHTML = '<span class="head" style="color: #828282;">' + name + ':</span> ' + Math.round(value) + '%';
+      return node;
+    }
+    function field(name, value) {
+      var node = document.createElement("div");
+      node.className += 'extension_field_';
+
+      node.innerHTML = ''+ name + ': <p  class="head link_mbti" style="color: #2a5885; width: 200px;">' +  value + ':<p/> ' ;
 
       return node;
     }
@@ -66,15 +65,30 @@ function setUserData(userId) {
     flex-wrap: wrap;
     padding-top: 5px;
   }
+  .extension_field_ {
+  color: #2a5885;
+    width: 84%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    padding-top: 5px;
+  }
+  .link_mbti {
+  width: 100px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  }
   `;
     document.head.appendChild(style);
     var container = document.getElementById('profile_short');
-      container.prepend(calculation(response.IE, 'Экстраверт', 'Интроверт'));
+    container.prepend(field('Общие группы', response.groups));
+    container.prepend(calculation(response.IE, 'Экстраверт', 'Интроверт'));
       container.prepend(calculation(response.JP, 'Иррационал', 'Рационал'));
       container.prepend(calculation(response.SN, 'Интуит', 'Сенсорик'));
       container.prepend(calculation(response.TF, 'Этик', 'Логик'));
       container.prepend(fieldLink('Психотип по MBTI'));
-      container.prepend(field('Общие группы', response.groups));
   };
   xhr.send();
 }
