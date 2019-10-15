@@ -35,7 +35,11 @@ function setUserData(userId) {
         ESFP: "https://typeplanet.ru/type-descriptions/esfp",
       };
       node.setAttribute("href", links[response.MBTI]);
-      node.innerHTML = '<span id="link_mbti" class="head" style="color: #2a5885; width: 200px; display: flex; justify-content: space-between;">' + name + ':<span/> ' + response.MBTI;
+      node.innerHTML = '' +
+        '<div class="clear_fix profile_info_row">' +
+        '  <div class="label fl_l">'+ name + ':</div>' +
+        '  <div class="labeled">' + response.MBTI + '</div>' +
+        '</div>';
 
       return node;
     }
@@ -47,7 +51,11 @@ function setUserData(userId) {
       } else {
         name = spare;
       }
-      node.innerHTML = '<span class="head" style="color: #828282;">' + name + ':</span> ' + Math.round(value) + '%';
+      node.innerHTML = '' +
+        '<div class="clear_fix profile_info_row">' +
+        '  <div class="label fl_l">'+ name + ':</div>' +
+        '  <div class="labeled">' +  + Math.round(value) + '%' + '</div>' +
+        '</div>';
       return node;
     }
     function getGroups(name, value) {
@@ -81,34 +89,6 @@ function setUserData(userId) {
 
       return node;
     }
-    var style = document.createElement('style');
-    style.innerHTML = `
-  .extension_field {
-  color: #2a5885;
-    width: 192px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    padding-top: 5px;
-  }
-  .extension_field_ {
-  color: #2a5885;
-    width: 84%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    padding-top: 5px;
-  }
-  .link_mbti {
-  width: 100px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  }
-  `;
-    document.head.appendChild(style);
     var container = document.getElementById('profile_short');
     container.prepend(getGroups('Общие группы', response.groups));
     container.prepend(calculation(response.IE, 'Экстраверт', 'Интроверт'));

