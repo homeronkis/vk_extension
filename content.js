@@ -59,33 +59,38 @@ function setUserData(userId) {
       return node;
     }
     function getGroups(name, value) {
-      var xhr = new XMLHttpRequest();
-      xhr.open(
-        'GET',
-        'https://api.vk.com/method/groups.getById?group_ids=' + response.groups + '&v=5.102&access_token=44bfe9d644bfe9d644bfe9d63544d6f9ab444bf44bfe9d618c310447a41f43260483d73&fields=name',
-        false
-      );
-      xhr.send()
-      groups = JSON.parse(xhr.response).response;
-      groups = groups.map(function(el) {
-          return '<a href="/public' + el.id + '">' + el.name + '</a>';
-      })
+      var groups = [];
+      if (response.groups) {
+          var xhr = new XMLHttpRequest();
+          xhr.open(
+            'GET',
+            'https://api.vk.com/method/groups.getById?group_ids=' + response.groups + '&v=5.102&access_token=44bfe9d644bfe9d644bfe9d63544d6f9ab444bf44bfe9d618c310447a41f43260483d73&fields=name',
+             false
+          );
+          xhr.send()
+          groups = JSON.parse(xhr.response).response;
+          groups = groups.map(function(el) {
+               return '<a href="/public' + el.id + '">' + el.name + '</a>';
+          })
+      }
       var node = document.createElement("div");
       node.className += 'groups';
 
       node.innerHTML = '' + 
       '<div class="clear_fix profile_info_row">' + 
       '  <div class="label fl_l">'+ name + ':</div>' + 
-      '  <div class="labeled">' +  groups.slice(0, 7).join(', ') + '</div>' + 
+      '  <div class="labeled">' +  (groups.slice(0, 7).join(', ') || 'Нет общих групп') + '</div>' + 
       '</div>';
+      
+      if (groups.length > 7) {
+          node.innerHTML += '<a style="margin-bottom: 5px;" class="profile_more_info_link" onclick="toggleGroups(this)">Показать полный список</a>'
 
-      node.innerHTML += '<a style="margin-bottom: 5px;" class="profile_more_info_link" onclick="toggleGroups(this)">Показать полный список</a>'
-
-      node.innerHTML += '' + 
-      '<div class="clear_fix miniblock" id="psychea-extra-groups" style="display: none">' +
-      '  <div class="label fl_l">&nbsp;</div>' +
-      '  <div class="labeled">' + groups.slice(7).join(', ') + '</div>' +
-      '</div>';
+          node.innerHTML += '' + 
+          '<div class="clear_fix miniblock" id="psychea-extra-groups" style="display: none">' +
+          '  <div class="label fl_l">&nbsp;</div>' +
+          '  <div class="labeled">' + groups.slice(7).join(', ') + '</div>' +
+          '</div>';
+      }
 
       return node;
     }
