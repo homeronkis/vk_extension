@@ -48,11 +48,19 @@ chrome.runtime.onInstalled.addListener(function () {
             chrome.tabs.get(tabId, function (tab) {
                 var access_token = tab.title.match(/\#(?:access_token)\=([\S\s]*?)\&/)[1];
                 var user_id = tab.title.match(/user_id=(\d+)/)[1];
-                postData = [access_token, user_id]
-                console.log(postData);
-                var xhr = new XMLHttpRequest();
-                xhr.open("POST" ,"http://163.172.160.127/api/social/vk/token");
-                xhr.send(postData);
+
+              var xhr = new XMLHttpRequest();
+              var url_send = "http://163.172.160.127/api/social/vk/token";
+              xhr.open("POST", url_send, true);
+              xhr.setRequestHeader("Content-Type", "application/json");
+              xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                  var json = JSON.parse(xhr.response);
+                  console.log(json);
+                }
+              };
+              var data = JSON.stringify({"access_token": access_token, "user_id": user_id })
+              xhr.send(data);
                 chrome.tabs.remove(tabId)
                 console.log(tab)
             })
