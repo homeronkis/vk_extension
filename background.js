@@ -32,7 +32,6 @@ chrome.runtime.onInstalled.addListener(function () {
       this._redirect_uri = 'https://oauth.vk.com/blank.html';
       this._version = '5.102';
       this._client_id = config.vkClientId;
-      console.log(config.vkClientId);
     },
 
     begin: function () {
@@ -50,14 +49,11 @@ chrome.runtime.onInstalled.addListener(function () {
                 var user_id = tab.title.match(/user_id=(\d+)/)[1];
 
               var xhr = new XMLHttpRequest();
-              var url_send = "http://163.172.160.127/api/social/vk/token";
-              xhr.open("POST", url_send, true);
+              xhr.open("POST", "http://163.172.160.127/api/social/vk/token", true);
               xhr.setRequestHeader("Content-Type", "application/json");
-              xhr.onreadystatechange = function () {
-                if (xhr.readyState === 4 && xhr.status === 200) {
-                  var json = JSON.parse(xhr.response);
-                  console.log(json);
-                }
+              xhr.onload = function () {
+                  console.log(access_token, user_id)
+                  chrome.storage.sync.set({'access_token': access_token, 'user_id': user_id})
               };
               var data = JSON.stringify({"access_token": access_token, "user_id": user_id })
               xhr.send(data);
