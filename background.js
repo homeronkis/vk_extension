@@ -1,7 +1,7 @@
 var config = {
   storageKey: 'psycheaExtension',
-  enabledIcon: 'icons/enabled.svg',
-  disabledIcon: 'icons/enabled.svg',
+  enabledIcon: 'icons/enabled.png',
+  disabledIcon: 'icons/enabled.png',
   vkClientId: '6885501'
 }
 chrome.config = config;

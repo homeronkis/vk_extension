@@ -17,29 +17,73 @@ function setUserData(userId) {
       var node = document.createElement("a");
       node.className += 'extension_field';
       links = {
-        INTJ: "https://typeplanet.ru/type-descriptions/intj",
-        INFJ: "https://typeplanet.ru/type-descriptions/infj",
-        INTP: "https://typeplanet.ru/type-descriptions/intp",
-        INFP: "https://typeplanet.ru/type-descriptions/infp",
-        ISTJ: "https://typeplanet.ru/type-descriptions/istj",
-        ISFJ: "https://typeplanet.ru/type-descriptions/isfj",
-        ISTP: "https://typeplanet.ru/type-descriptions/istp",
-        ISFP: "https://typeplanet.ru/type-descriptions/isfp",
-        ENTJ: "https://typeplanet.ru/type-descriptions/entj",
-        ENFJ: "https://typeplanet.ru/type-descriptions/enfj",
-        ENTP: "https://typeplanet.ru/type-descriptions/entp",
-        ENFP: "https://typeplanet.ru/type-descriptions/enfp",
-        ESTJ: "https://typeplanet.ru/type-descriptions/estj",
-        ESFJ: "https://typeplanet.ru/type-descriptions/esfj",
-        ESTP: "https://typeplanet.ru/type-descriptions/estp",
-        ESFP: "https://typeplanet.ru/type-descriptions/esfp",
+        INTJ: {
+            url: "https://typeplanet.ru/type-descriptions/intj",
+            title: "Стратег"
+        },
+        INTP: {
+          url: "https://typeplanet.ru/type-descriptions/intp",
+          title: "Ученый"
+        },
+        INFP: {
+          url:"https://typeplanet.ru/type-descriptions/infp",
+          title: "Посредник"
+        },
+        ISTJ: {
+          url: "https://typeplanet.ru/type-descriptions/istj",
+          title: "Администратор"
+        },
+        ISFJ: {
+          url: "https://typeplanet.ru/type-descriptions/isfj",
+          title: "Защитник"
+        },
+        ISTP: {
+          url:"https://typeplanet.ru/type-descriptions/istp",
+          title: "Виртуоз"
+        },
+        ISFP: {
+          url: "https://typeplanet.ru/type-descriptions/isfp",
+          title: "Артист"
+        } ,
+        ENTJ: {
+          url:"https://typeplanet.ru/type-descriptions/entj",
+          title: "Командир"
+        },
+        ENFJ: {
+          url: "https://typeplanet.ru/type-descriptions/enfj",
+          title: "Тренер"
+        },
+        ENTP: {
+          url:"https://typeplanet.ru/type-descriptions/entp",
+          title: "Полемист"
+        },
+        ENFP: {
+          url:"https://typeplanet.ru/type-descriptions/enfp",
+          title: "Борец"
+        },
+        ESTJ: {
+          url: "https://typeplanet.ru/type-descriptions/estj",
+          title: "Менеджер"
+        },
+        ESFJ: {
+          url: "https://typeplanet.ru/type-descriptions/esfj",
+          title: "Консул"
+        },
+        ESTP: {
+          url:"https://typeplanet.ru/type-descriptions/estp",
+          title: "Делец"
+        },
+        ESFP: {
+          url: "https://typeplanet.ru/type-descriptions/esfp",
+          title: "Развлекатель"
+        },
       };
-      node.setAttribute("href", links[response.MBTI]);
-      node.setAttribute("target", "blank");
+      var link = links[response.MBTI];
+      node.setAttribute("href", link.url);
       node.innerHTML = '' +
         '<div class="clear_fix profile_info_row">' +
         '  <div class="label fl_l">'+ name + ':</div>' +
-        '  <div class="labeled">' + response.MBTI + '</div>' +
+        '  <div class="labeled">' + link.title + ' (' + response.MBTI + ')' + '</div>' +
         '</div>';
 
       return node;
@@ -112,6 +156,7 @@ function modifyProfile() {
         if (window.cur.oid) {
           setUserData(window.cur.oid)
         }
+
         return function(e) {
           setUserData(e.user_id)
 
