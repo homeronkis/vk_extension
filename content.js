@@ -35,6 +35,7 @@ function setUserData(userId) {
         ESFP: "https://typeplanet.ru/type-descriptions/esfp",
       };
       node.setAttribute("href", links[response.MBTI]);
+      node.setAttribute("target", "blank");
       node.innerHTML = '' +
         '<div class="clear_fix profile_info_row">' +
         '  <div class="label fl_l">'+ name + ':</div>' +
@@ -111,7 +112,6 @@ function modifyProfile() {
         if (window.cur.oid) {
           setUserData(window.cur.oid)
         }
-
         return function(e) {
           setUserData(e.user_id)
 
