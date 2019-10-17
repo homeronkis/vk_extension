@@ -17,7 +17,10 @@ function setUserData(userId) {
       var node = document.createElement("a");
       node.className += 'extension_field';
       links = {
-        INTJ: "https://typeplanet.ru/type-descriptions/intj",
+        INTJ: {
+            url: "https://typeplanet.ru/type-descriptions/intj",
+            title: "найди тайтл и сюда вставь для каждого из типов"
+        },
         INFJ: "https://typeplanet.ru/type-descriptions/infj",
         INTP: "https://typeplanet.ru/type-descriptions/intp",
         INFP: "https://typeplanet.ru/type-descriptions/infp",
@@ -34,11 +37,12 @@ function setUserData(userId) {
         ESTP: "https://typeplanet.ru/type-descriptions/estp",
         ESFP: "https://typeplanet.ru/type-descriptions/esfp",
       };
-      node.setAttribute("href", links[response.MBTI]);
+      var link = links[response.MBTI];
+      node.setAttribute("href", link.url);
       node.innerHTML = '' +
         '<div class="clear_fix profile_info_row">' +
         '  <div class="label fl_l">'+ name + ':</div>' +
-        '  <div class="labeled">' + response.MBTI + '</div>' +
+        '  <div class="labeled">' + link.title + ' (' + response.MBTI + ')' + '</div>' +
         '</div>';
 
       return node;
