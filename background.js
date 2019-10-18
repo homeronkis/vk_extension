@@ -1,7 +1,7 @@
 var config = {
   storageKey: 'psycheaExtension',
-  enabledIcon: 'icons/leaf.png',
-  disabledIcon: 'icons/disabled.png',
+  enabledIcon: 'icons/enabled.png',
+  disabledIcon: 'icons/icon_16.png',
   vkClientId: '6885501'
 }
 chrome.config = config;
@@ -17,12 +17,14 @@ chrome.runtime.onInstalled.addListener(function () {
     chrome.storage.sync.set({
       [config.storageKey]: false
     });
+    chrome.browserAction.setIcon({path:config.disabledIcon});
   }
 
   window.enable = function() {
     chrome.storage.sync.set({
       [config.storageKey]: true
-    })
+    });
+    chrome.browserAction.setIcon({path:config.enabledIcon});
   };
 
   window.OAuth2 = {
