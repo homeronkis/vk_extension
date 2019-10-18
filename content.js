@@ -137,11 +137,12 @@ function setUserData(userId) {
     }
     var container = document.getElementById('profile_short');
     container.prepend(getGroups('Общие группы', response.groups));
-    container.prepend(calculation(response.IE, 'Экстраверт', 'Интроверт'));
-      container.prepend(calculation(response.JP, 'Иррационал', 'Рационал'));
-      container.prepend(calculation(response.SN, 'Интуит', 'Сенсорик'));
-      container.prepend(calculation(response.TF, 'Этик', 'Логик'));
-      container.prepend(fieldLink('Психотип по MBTI'));
+      container.prepend(calculation(response.JP, 'Иррациональность', 'Рациональность'));
+      container.prepend(calculation(response.TF, 'Эмоции', 'Логика'));
+    container.prepend(calculation(response.SN, 'Интуиция', 'Сенсорика'));
+    container.prepend(calculation(response.IE, 'Экстраверсия', 'Интроверсия'));
+
+    container.prepend(fieldLink('Психотип по MBTI'));
   };
   xhr.send();
 }

@@ -24,7 +24,7 @@
     "content.js"
   ],
   "browser_action": {
-    "default_icon": "icons/enabled.png",
+    "default_icon": "icons/leaf.png",
     "default_popup": "popup.html"
   },
   "manifest_version": 2
