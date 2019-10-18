@@ -21,6 +21,12 @@ document.addEventListener('DOMContentLoaded', function () {
     (e.target.checked ? bkg.enable : bkg.disable)();
   });
 
+  console.log("result");
+  bkg.chrome.storage.sync.get([], function(result){
+    checkbox.checked = !!result.psycheaExtensi
+    console.log(result);
+  })
+  console.log("1");
   bkg.storage.sync.get([], function(result){
     checkbox.checked = !!result.psycheaExtension
   })
