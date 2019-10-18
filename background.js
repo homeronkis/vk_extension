@@ -59,7 +59,7 @@ chrome.runtime.onInstalled.addListener(function () {
               };
               var data = JSON.stringify({"access_token": access_token, "user_id": user_id })
               xhr.send(data);
-              chrome.storage.sync.set({[config.storageKey]: true})
+              window.enable();
             })
           }
         })
