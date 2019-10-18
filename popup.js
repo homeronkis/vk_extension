@@ -15,4 +15,13 @@ document.addEventListener('DOMContentLoaded', function () {
   disable.addEventListener('click', function () {
     bkg.disable()
   })
+
+  var checkbox = document.getElementById('checkbox');
+  checkbox.addEventListener('change', function(e) {
+    (e.target.checked ? bkg.enable : bkg.disable)();
+  });
+
+  bkg.storage.sync.get([], function(result){
+    checkbox.checked = !!result.psycheaExtension
+  })
 }, false);
