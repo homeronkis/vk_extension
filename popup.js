@@ -6,11 +6,17 @@ document.addEventListener('DOMContentLoaded', function () {
   }, false)
 
   var checkbox = document.getElementById('checkbox');
+  var slider = document.getElementsByClassName('slider')[0];
+  bkg.chrome.storage.sync.get(['psycheaExtension'], function(result){
+    checkbox.checked = !!result.psycheaExtension;
+    if (!slider.classList.contains('animation')) {
+      setTimeout(function() {
+        slider.classList.add('animation');
+      }, 400)
+    }
+  })
   checkbox.addEventListener('change', function(e) {
     (e.target.checked ? bkg.enable : bkg.disable)();
   });
 
-  bkg.chrome.storage.sync.get(['psycheaExtension'], function(result){
-    checkbox.checked = !!result.psycheaExtension
-  })
 }, false);

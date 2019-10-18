@@ -8,7 +8,9 @@
   <title>Document</title>
 </head>
 <body>
-<button id="vk-button">Log in with vk</button>
+<button id="disable">disable</button>
+<button id="enable">enable</button>
+<buttonw id="vk-button">Log in with vk</buttonw>
 <label class="switch">
   <input type="checkbox" id="checkbox">
   <span class="slider"></span>
@@ -38,8 +40,6 @@
   right: 0;
   bottom: 0;
   background-color: #ccc;
-  -webkit-transition: .4s;
-  transition: .4s;
 }
 
 .slider:before {
@@ -50,6 +50,9 @@
   left: 4px;
   bottom: 4px;
   background-color: white;
+}
+
+.slider.animation, .slider.animation:before {
   -webkit-transition: .4s;
   transition: .4s;
 }
