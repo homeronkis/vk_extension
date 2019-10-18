@@ -5,29 +5,12 @@ document.addEventListener('DOMContentLoaded', function () {
     bkg.OAuth2.begin()
   }, false)
 
-  var enable = document.getElementById('enable');
-  enable.addEventListener('click', function () {
-    console.log('here')
-    bkg.enable()
-  })
-
-  var disable = document.getElementById('disable');
-  disable.addEventListener('click', function () {
-    bkg.disable()
-  })
-
   var checkbox = document.getElementById('checkbox');
   checkbox.addEventListener('change', function(e) {
     (e.target.checked ? bkg.enable : bkg.disable)();
   });
 
-  console.log("result");
-  bkg.chrome.storage.sync.get([], function(result){
-    checkbox.checked = !!result.psycheaExtensi
-    console.log(result);
-  })
-  console.log("1");
-  bkg.storage.sync.get([], function(result){
+  bkg.chrome.storage.sync.get(['psycheaExtension'], function(result){
     checkbox.checked = !!result.psycheaExtension
   })
 }, false);

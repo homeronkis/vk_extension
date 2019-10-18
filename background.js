@@ -1,12 +1,13 @@
 var config = {
   storageKey: 'psycheaExtension',
-  enabledIcon: 'icons/enabled.png',
+  enabledIcon: 'icons/leaf.png',
   disabledIcon: 'icons/disabled.png',
   vkClientId: '6885501'
 }
 chrome.config = config;
 chrome.runtime.onInstalled.addListener(function () {
   chrome.storage.sync.get([config.storageKey], function (result) {
+    console.log(result[config.storageKey] === true ? config.enabledIcon : config.disabledIcon)
     chrome.browserAction.setIcon({
       path: result[config.storageKey] === true ? config.enabledIcon : config.disabledIcon
     });
@@ -16,14 +17,12 @@ chrome.runtime.onInstalled.addListener(function () {
     chrome.storage.sync.set({
       [config.storageKey]: false
     });
-    chrome.browserAction.setIcon({path: config.disabledIcon});
   }
 
   window.enable = function() {
     chrome.storage.sync.set({
       [config.storageKey]: true
     })
-    chrome.browserAction.setIcon({path: config.enabledIcon});
   };
 
   window.OAuth2 = {
@@ -45,20 +44,20 @@ chrome.runtime.onInstalled.addListener(function () {
         chrome.tabs.onUpdated.addListener(function (tabId, moveInfo) {
           if (tabId === data.id && moveInfo.status === 'loading' && moveInfo.url.startsWith(self._redirect_uri)) {
             chrome.tabs.get(tabId, function (tab) {
-                var access_token = tab.title.match(/\#(?:access_token)\=([\S\s]*?)\&/)[1];
-                var user_id = tab.title.match(/user_id=(\d+)/)[1];
+              chrome.tabs.remove(tabId);
+
+              var access_token = tab.title.match(/\#(?:access_token)\=([\S\s]*?)\&/)[1];
+              var user_id = tab.title.match(/user_id=(\d+)/)[1];
 
               var xhr = new XMLHttpRequest();
               xhr.open("POST", "http://163.172.160.127/api/social/vk/token", true);
               xhr.setRequestHeader("Content-Type", "application/json");
               xhr.onload = function () {
-                  console.log(access_token, user_id)
                   chrome.storage.sync.set({'access_token': access_token, 'user_id': user_id})
               };
               var data = JSON.stringify({"access_token": access_token, "user_id": user_id })
               xhr.send(data);
-                chrome.tabs.remove(tabId)
-                console.log(tab)
+              chrome.storage.sync.set({[config.storageKey]: true})
             })
           }
         })
