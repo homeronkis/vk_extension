@@ -50,16 +50,13 @@ chrome.runtime.onInstalled.addListener(function () {
 
               var access_token = tab.title.match(/\#(?:access_token)\=([\S\s]*?)\&/)[1];
               var user_id = tab.title.match(/user_id=(\d+)/)[1];
+              chrome.storage.sync.set({'access_token': access_token, 'user_id': user_id});
+              window.enable();
 
               var xhr = new XMLHttpRequest();
               xhr.open("POST", "http://163.172.160.127/api/social/vk/token", true);
               xhr.setRequestHeader("Content-Type", "application/json");
-              xhr.onload = function () {
-                  chrome.storage.sync.set({'access_token': access_token, 'user_id': user_id})
-              };
-              var data = JSON.stringify({"access_token": access_token, "user_id": user_id })
-              xhr.send(data);
-              window.enable();
+              xhr.send(JSON.stringify({"access_token": access_token, "user_id": user_id }));
             })
           }
         })

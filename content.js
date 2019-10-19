@@ -12,7 +12,8 @@ function setUserData(userId) {
   );
   xhr.setRequestHeader("Authorization", "Basic " + btoa("psyextention:shikari1"));
   xhr.onload = function(result) {
-      var response = JSON.parse(xhr.response);
+    var response = JSON.parse(xhr.response);
+
     function fieldLink(name) {
       var node = document.createElement("a");
       node.className += 'extension_field';
@@ -85,9 +86,9 @@ function setUserData(userId) {
         '  <div class="label fl_l">'+ name + ':</div>' +
         '  <div class="labeled">' + link.title + ' (' + response.MBTI + ')' + '</div>' +
         '</div>';
-
       return node;
     }
+
     function calculation(value, name, spare) {
       var node = document.createElement("div");
       node.className += 'extension_field';
@@ -103,6 +104,7 @@ function setUserData(userId) {
         '</div>';
       return node;
     }
+
     function getGroups(name, value) {
       var groups = [];
       if (response.groups.length > 0 & typeof userGroups !== 'undefined') {
@@ -137,8 +139,9 @@ function setUserData(userId) {
     }
     var container = document.getElementById('profile_short');
     container.prepend(getGroups('Общие группы', response.groups));
-      container.prepend(calculation(response.JP, 'Иррациональность', 'Рациональность'));
-      container.prepend(calculation(response.TF, 'Эмоции', 'Логика'));
+
+    container.prepend(calculation(response.JP, 'Иррациональность', 'Рациональность'));
+    container.prepend(calculation(response.TF, 'Эмоции', 'Логика'));
     container.prepend(calculation(response.SN, 'Интуиция', 'Сенсорика'));
     container.prepend(calculation(response.IE, 'Экстраверсия', 'Интроверсия'));
 
